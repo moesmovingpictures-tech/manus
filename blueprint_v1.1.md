@@ -196,3 +196,30 @@ Additionally, Manus will now:
 - **User-Centric:** Prioritize extracting information that improves user experience.
 
 
+
+
+## Performance Optimization Strategies
+
+To address observed slowdowns and ensure continued responsiveness, the following optimization strategies will be implemented:
+
+### 1. Database Connection Pooling and Asynchronous SQLite Driver
+- **Strategy:** Implement `aiosqlite` for asynchronous, non-blocking database operations and manage a connection pool to reuse connections.
+- **Impact:** Reduces latency by eliminating repeated connection overhead and improves concurrency by keeping the FastAPI event loop responsive.
+
+### 2. Refactor `main.py` for Clarity and Efficiency
+- **Strategy:** Remove or refactor unused Supabase-related code. Update the `/query` endpoint to use SQLite as the primary document source.
+- **Impact:** Improves code cleanliness, reduces unnecessary overhead, and clarifies the primary data flow.
+
+### 3. Batching and Debouncing Background Operations
+- **Strategy:** Control the frequency of `inner_voice.reflect` and `learn.learn_from_turn` by triggering them every N turns, after user inactivity, or when sufficient new information accumulates.
+- **Impact:** Reduces computational load and frees up resources for foreground tasks, leading to smoother user experience.
+
+### 4. Optimize Data Structures and Queries
+- **Strategy:** Review SQLite schema and queries for optimization, including adding appropriate indexing on frequently queried columns.
+- **Impact:** Achieves faster data retrieval and improves scalability.
+
+### 5. Resource Monitoring and Profiling
+- **Strategy:** Implement basic resource monitoring and utilize Python profiling tools to track CPU, memory, and I/O, guiding data-driven optimization efforts.
+- **Impact:** Provides concrete data for continuous performance improvement and ensures optimizations target actual bottlenecks.
+
+
