@@ -47,3 +47,17 @@ This document summarizes the architecture and functionality of the self-improvin
 ## Current Version: 1
 This version establishes the foundational memory layer with local SQLite storage, optional Supabase cloud synchronization via REST API, and a basic self-patching mechanism. It also includes initial version control and credit management features.
 
+
+
+## Current Version: 1.1
+This version significantly enhances the memory layer by introducing:
+- **Schema Upgrade:** New tables (`conv_turn`, `concept`, `concept_link`, `debug_log`) for structured conversation history, self-discovered concepts, knowledge graph, and self-debugging logs.
+- **Inner Monologue:** Enables Manus to reflect on its behavior and generate internal thoughts.
+- **Self-Healing Code:** Monitors logs and applies micro-patches automatically.
+- **Human-Like Learning Loop:** Extracts and canonicalizes concepts, building knowledge graph edges.
+- **Ask Clarifying Questions:** Allows Manus to ask for clarification when uncertain.
+- **Credit-Aware Scheduler:** Manages token expenditure and warns about high costs.
+- **FastAPI Integration:** New `/chat` endpoint for conversational interaction, integrating the new modules.
+- **Git as Memory Time-Machine:** Automates committing database snapshots and changes to Git for version control and historical analysis.
+
+
