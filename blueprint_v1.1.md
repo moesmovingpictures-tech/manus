@@ -83,3 +83,73 @@ Every user message will:
 - Possibly spawn a self-patch commit.
 Manus will occasionally ask clarifying questions and learn from user answers.
 
+
+
+### New Schema Add-Ons (from `migration_v2.1.sql`)
+- **`event` table:** To store typed event streams (`id`, `ts`, `who`, `what`, `meta`, `embedding vector(192)`), mirroring official Manus design for chain-of-thought and clean truncation.
+- **`raci` table:** For RACI alignment guard (`agent`, `task`, `role`, `approver`), preventing value-drift as agents multiply.
+- **`knowledge_api` table:** For domain knowledge APIs (`name`, `url`, `headers`, `cache_ttl`, `last_call`, `last_body`), enabling auto-calling for specialized tasks.
+
+
+
+
+### Credit-Gated Self-Reflection (`memory/reflection.py`)
+- **Purpose:** To enable Manus to reflect on its own behavior after every assistant reply, with a focus on credit conservation.
+- **Functionality:**
+    - `reflect(turn)`: Analyzes the last turn, potentially using a cheap local LLM or 3.5-turbo, and generates concise markdown bullets reflecting on understanding, new concepts, and risks/bugs. This reflection is credit-gated using `budget.spend_with_plan()`.
+
+### RACI Gatekeeper (`memory/guard.py`)
+- **Purpose:** To implement an alignment guard based on the RACI model, ensuring that actions are approved and aligned with user intent.
+- **Functionality:**
+    - `gate(agent, task)`: Queries the `raci` table to check for approval requirements. If an 'A' (Accountable) role is defined, it will ask for user approval before proceeding with the tool call. This check is designed to be low-cost (~40 tokens).
+
+
+
+
+### Knowledge-API Auto-Injector (`memory/know.py`)
+- **Purpose:** To automatically inject domain-specific knowledge by calling external APIs based on query relevance.
+- **Functionality:**
+    - `maybe_call_api(query_vec, top_k=1)`: Searches the `knowledge_api` table for relevant APIs based on embedding similarity. If a cached response is available and fresh, it returns it. Otherwise, it makes an HTTP request to the API, caches the response, and returns the body.
+
+### Confidence Footer (`src/format.py`)
+- **Purpose:** To provide the user with a visual indicator of Manus's confidence in its replies.
+- **Functionality:**
+    - `footer(last_turn_vec, history_vecs)`: Calculates a confidence score (1-5 scale) based on the cosine similarity between the last turn's vector and historical conversation vectors. This score is then represented visually with '◕' and '◔' characters and appended to every assistant reply, without incurring extra LLM tokens.
+
+
+
+
+### Implementation Checklist (Credit-Safe)
+- **Purpose:** Provides a step-by-step guide for implementing the new features with estimated token costs.
+- **Cards:**
+    - Add `v2.1.sql` tables (200 tokens)
+    - Insert RACI csv (120 tokens)
+    - Wire `guard.py` into router (180 tokens)
+    - Add `know.py` caller (220 tokens)
+    - Add `reflection.py` (190 tokens)
+    - Append confidence footer (90 tokens)
+- **Total Estimated Cost:** ≤ 1,000 tokens, leaving ample headroom for the next patch.
+
+### One-Command Delta
+- **Purpose:** Simplifies the application of the new features after the initial `boot.sh` setup.
+- **Steps:**
+    - `sqlite3 memory/db.sqlite < migration_v2.1.sql`
+    - Populate `raci` table from `memory/raci.csv`.
+    - Auto-commit all changes to Git with a descriptive message.
+
+## Enhanced Learning Loop Summary
+With these upgrades, every user message will now:
+- Be stored & embedded.
+- Trigger an inner monologue.
+- Update the private knowledge graph.
+- Possibly spawn a self-patch commit.
+- Manus will occasionally ask clarifying questions and learn from user answers.
+
+Additionally, Manus will now:
+- Keep an event-stream identical to the official implementation.
+- Ask permission before risky or expensive acts (HADA alignment).
+- Pull domain APIs automatically instead of generic web-scrape.
+- Show a live confidence score so you know when to doubt it.
+- Still respect 300 kT/day and 4 kT/patch without exception.
+
+
