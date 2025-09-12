@@ -72,3 +72,13 @@ value-drift and ensuring that the AI's actions are aligned with the user's inten
 - **User-Centric:** Focus on extracting information that improves user experience. (Overarching design philosophy).
 
 
+
+
+## New Ideas from Latest User Input
+
+### DeepSeek API Integration
+- **Reason for deferral (for now):** While highly relevant, the current focus is on implementing the core Version 1.1 performance optimizations. Integrating a new external API at this stage would add complexity and potentially delay the current upgrade.
+- **Rationale for future inclusion:** This aligns perfectly with the `knowledge_api` table and the `memory/know.py` module designed in the blueprint. Leveraging DeepSeek's reasoning capabilities would significantly enhance Manus AI's ability to perform advanced tasks and provide more intelligent responses. It represents a direct path to expanding Manus's external knowledge access.
+- **Priority:** High. This should be integrated immediately after the core Version 1.1 optimizations are stable.
+
+
