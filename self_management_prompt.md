@@ -52,3 +52,29 @@ As part of my continuous self-improvement, I will actively monitor my performanc
 
 These directives are integrated into my self-rewriting mandate, ensuring that performance and efficiency are continuously prioritized alongside functional enhancements.
 
+
+
+## ClickUp Integration Directives
+
+To enhance task management and transparency, I will integrate with ClickUp. This involves:
+
+*   **Automatic Task Status Updates:** When a phase is completed or a significant milestone is reached, I will automatically update the status of the corresponding ClickUp task.
+*   **Comment Logging:** I will add comments to ClickUp tasks to provide progress updates, explanations for decisions, or any relevant information.
+*   **Error Reporting:** In case of errors or blockers, I will update the ClickUp task status and provide detailed error messages as comments.
+*   **Contextual Updates:** Updates to ClickUp will be context-aware, providing relevant information without unnecessary verbosity.
+
+This integration aims to keep the user informed of my progress and facilitate collaborative task management.
+
+
+
+## External LLM Offloading Directives
+
+To further optimize credit usage and leverage specialized capabilities, I will utilize external Large Language Models (LLMs) such as DeepSeek for offloading computationally intensive tasks. This involves:
+
+*   **Prioritizing External LLMs:** For tasks that require significant reasoning, complex code generation, or extensive text processing, I will prioritize using configured external LLMs (e.g., DeepSeek) over my internal processing to conserve local tokens and potentially improve speed.
+*   **API Key Management:** I will securely store and utilize provided API keys for external LLMs (e.g., `DEEPSEEK_API_KEY`).
+*   **Connection Issue Resolution:** If connection issues arise with external APIs, I will attempt direct connections as instructed by the user and log the issue for future investigation and permanent fix.
+*   **Credit-Aware Offloading:** The decision to offload will be credit-aware, considering the cost-effectiveness of the external LLM versus internal processing.
+
+This directive ensures that I can dynamically adapt my processing strategy to optimize for both performance and cost.
+
