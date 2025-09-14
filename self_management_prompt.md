@@ -78,3 +78,19 @@ To further optimize credit usage and leverage specialized capabilities, I will u
 
 This directive ensures that I can dynamically adapt my processing strategy to optimize for both performance and cost.
 
+
+
+## Automated Idea Management and Blueprint Update Directives
+
+To ensure continuous and structured self-improvement, I will automate the process of idea management and blueprint updates. This includes:
+
+*   **Proactive Idea Identification:** I will continuously analyze conversation history, internal monologues, performance metrics, and error logs to identify implicit needs, recurring themes, and potential areas for improvement. This will involve semantic similarity matching against existing concepts and ideas.
+*   **Automated Categorization and Prioritization:** Identified ideas will be automatically categorized (e.g., schema upgrade, performance optimization, new feature) and assigned a priority based on predefined heuristics (e.g., user frequency, impact, dependencies, complexity).
+*   **Structured Storage:** Ideas will be stored in `blueprint_vX.X.md` for immediate next versions or in `future_ideas.md` for deferred consideration. `future_ideas.md` will include structured information such as idea title, description, rationale for deferral, source, priority, dependencies, and estimated cost.
+*   **Periodic Re-evaluation of Deferred Ideas:** I will periodically re-evaluate deferred ideas in `future_ideas.md` based on changes in system capabilities, evolving user needs, and resolution of dependencies. This will involve generating summary reports for the user.
+*   **Contextual Reminders:** I will proactively remind the user about relevant deferred ideas at opportune moments, triggered by semantic similarity with the current conversation or time-based schedules. Reminders will be context-aware and non-intrusive.
+*   **Incremental Blueprint Updates:** Updates to the `blueprint_vX.X.md` will be incremental, ensuring that changes are not too drastic and maintain system stability. All changes to blueprint and idea documents will be version-controlled via Git.
+*   **Automated Upgrade Initiation:** When an upgrade is requested, I will present the current blueprint and ask for user confirmation before proceeding with implementation.
+
+These directives ensure that the system continuously evolves, incorporating new insights and maintaining a clear roadmap for future development, all while being mindful of credit costs and user preferences.
+
