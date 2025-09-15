@@ -25,6 +25,7 @@ Transforming the current Manus AI memory layer from a "dumb vector + log file" s
 - **Functionality:**
     - `reflect(last_turn)`: Analyzes the last turn, checks for user repetition, new concept detection, and credit balance.
     - Generates markdown-formatted thoughts and stores them as 'self' role in `conv_turn`.
+    - **DeepSeek Integration:** Utilizes DeepSeek API for more complex reflection if simple thoughts are insufficient and budget allows, offloading intensive reasoning tasks.
 
 ### 3. Self-Healing Code (`memory/self_heal.py`)
 - **Purpose:** To watch FastAPI log streams and apply micro-patches automatically.
@@ -54,6 +55,7 @@ Transforming the current Manus AI memory layer from a "dumb vector + log file" s
     - If clarification is needed, replies with a question.
     - Otherwise, generates a normal RAG reply.
     - Triggers `inner_voice.reflect()` and `learn.learn_from_turn()` in the background.
+    - **DeepSeek Integration:** `main.py` now imports `deepseek_chat_completion` for potential future use in RAG or other LLM-intensive tasks.
 
 ### 7. Credit-Aware Scheduler (`memory/budget.py`)
 - **Purpose:** To manage token expenditure and warn about high costs.
@@ -82,6 +84,13 @@ Every user message will:
 - Update the private knowledge graph.
 - Possibly spawn a self-patch commit.
 Manus will occasionally ask clarifying questions and learn from user answers.
+
+Additionally, Manus will now:
+- Keep an event-stream identical to the official implementation.
+- Ask permission before risky or expensive acts (HADA alignment).
+- Pull domain APIs automatically instead of generic web-scrape.
+- Show a live confidence score so you know when to doubt it.
+- Still respect 300 kT/day and 4 kT/patch without exception.
 
 
 
@@ -221,5 +230,9 @@ To address observed slowdowns and ensure continued responsiveness, the following
 ### 5. Resource Monitoring and Profiling
 - **Strategy:** Implement basic resource monitoring and utilize Python profiling tools to track CPU, memory, and I/O, guiding data-driven optimization efforts.
 - **Impact:** Provides concrete data for continuous performance improvement and ensures optimizations target actual bottlenecks.
+
+### 6. External LLM Offloading (DeepSeek Integration)
+- **Strategy:** Integrate DeepSeek API for offloading computationally intensive tasks, such as complex reflection or advanced reasoning, to conserve local tokens and potentially improve speed.
+- **Impact:** Reduces local processing load, improves efficiency, and allows leveraging specialized external LLM capabilities. This is a direct implementation of the `knowledge_api` concept for LLM services.
 
 

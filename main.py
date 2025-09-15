@@ -7,8 +7,9 @@ import hashlib
 import asyncio
 import json # Keep json for meta handling
 from memory.deepseek_utils import deepseek_chat_completion
+from memory.task_queue import background_task_queue
 
-from memory import db, inner_voice, learn, ask_back, budget
+from memory import db, inner_voice, learn, ask_back, budget, monitor
 
 app = FastAPI()
 
@@ -118,13 +119,18 @@ async def chat(msg: str):
         await db.add_turn(role="assistant", text=reply)
 
         # Reflect & learn in background
-        asyncio.create_task(inner_voice.reflect({"text": reply}))
-        asyncio.create_task(learn.learn_from_turn({"text": msg}))
+        await background_task_queue.add_task(inner_voice.reflect, {"text": reply})
+        await background_task_queue.add_task(learn.learn_from_turn, {"text": msg})
         
         return {"reply": reply}
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(monitor.start_monitoring())
 
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
 

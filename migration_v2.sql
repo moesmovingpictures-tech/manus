@@ -6,16 +6,16 @@ DROP TABLE IF EXISTS lessons; -- Drop the old lessons table if it exists
 
 CREATE TABLE conv_turn(
 id          INTEGER PRIMARY KEY AUTOINCREMENT,
-ts          INTEGER NOT NULL DEFAULT (CAST(strftime('%s', 'now') AS INTEGER)),
+ts          INTEGER NOT NULL DEFAULT (CAST(strftime("%s", "now") AS INTEGER)),
 role        TEXT CHECK (role IN (
-    'user',
-    'assistant',
-    'system',
-    'self'
+    "user",
+    "assistant",
+    "system",
+    "self"
 )),
 text        TEXT NOT NULL,
 meta        TEXT,
-embedding   BLOB
+embedding   TEXT -- Changed from BLOB to TEXT
 );
 
 CREATE TABLE concept(
@@ -24,7 +24,7 @@ name        TEXT UNIQUE,
 aliases     TEXT,
 summary     TEXT,
 meta        TEXT,
-embedding   BLOB
+embedding   TEXT -- Changed from BLOB to TEXT
 );
 
 CREATE TABLE concept_link(
@@ -38,13 +38,13 @@ FOREIGN KEY (dst_id) REFERENCES concept(id)
 
 CREATE TABLE debug_log(
 id      INTEGER PRIMARY KEY AUTOINCREMENT,
-ts      INTEGER NOT NULL DEFAULT (CAST(strftime('%s', 'now') AS INTEGER)),
+ts      INTEGER NOT NULL DEFAULT (CAST(strftime("%s", "now") AS INTEGER)),
 source  TEXT,
 level   TEXT CHECK (level IN (
-    'info',
-    'warn',
-    'error',
-    'fix'
+    "info",
+    "warn",
+    "error",
+    "fix"
 )),
 msg     TEXT,
 patch   TEXT
