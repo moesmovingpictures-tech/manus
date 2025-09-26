@@ -2,6 +2,7 @@ import aiosqlite
 import json
 import os
 import asyncio
+import time
 
 _DB_PATH = "memory/db.sqlite"
 _POOL = None
@@ -15,7 +16,7 @@ async def get_db_pool():
 
 async def add(txt):
     pool = await get_db_pool()
-    await pool.execute("INSERT INTO lessons(txt,ts) VALUES(?,?)",(txt,int(os.time())))
+    await pool.execute("INSERT INTO lessons(txt,ts) VALUES(?,?)",(txt,int(time.time())))
     await pool.commit()
 
 async def fetch(n=5):
@@ -34,7 +35,7 @@ async def token_balance():
 async def add_turn(role, text, meta=None, embedding=None):
     pool = await get_db_pool()
     await pool.execute("INSERT INTO conv_turn(role,text,meta,embedding,ts) VALUES (?,?,?,?,?)",
-                (role, text, json.dumps(meta) if meta else None, json.dumps(embedding) if embedding else None, int(os.time())))
+                (role, text, json.dumps(meta) if meta else None, json.dumps(embedding) if embedding else None, int(time.time())))
     await pool.commit()
 
 async def spend(tokens: int):

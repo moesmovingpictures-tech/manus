@@ -33,7 +33,7 @@ async def learn_from_turn(turn: dict):
             await pool.execute("""
                 INSERT INTO concept_link(src_id,dst_id,rel)
                 VALUES (?,?,?)
-                ON CONFLICT DO NOTHING""", (src_id, dst_id, \'related\'))
+                ON CONFLICT DO NOTHING""", (src_id, dst_id, 'related'))
 
     # 4.3 Summarise conversation every N turns
     # This part requires an LLM call, which is outside the current scope of this file

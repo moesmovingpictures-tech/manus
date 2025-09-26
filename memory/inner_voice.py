@@ -55,10 +55,10 @@ async def reflect(last_turn: dict):
 
     monologue = monologue or "- All quiet."
 
-    await pool.execute("INSERT INTO conv_turn(role,text,meta) VALUES (
-        \"self\",
+    await pool.execute("""INSERT INTO conv_turn(role,text,meta) VALUES (
+        "self",
         ?,
-        ?)",
+        ?)""",
         (monologue, json.dumps({"type": "monologue"})))
     await pool.commit()
     print("🧠  " + monologue)

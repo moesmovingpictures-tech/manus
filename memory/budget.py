@@ -1,7 +1,7 @@
 DAILY_CAP = 300_000
 WARN_THRESHOLD = 0.15
 
-def spend_with_plan(name: str, estimated: int) -> bool:
+async def spend_with_plan(name: str, estimated: int) -> bool:
     # This function needs to interact with a token balance system.
     # For now, we'll use a placeholder that assumes a global token_balance function or similar.
     # In a real scenario, this would check the actual remaining balance.
@@ -23,9 +23,7 @@ def spend_with_plan(name: str, estimated: int) -> bool:
         #     return False
         pass # Auto-approve for non-interactive testing
             
-    # Placeholder for spending tokens
-    # Assuming db.spend() exists and deducts tokens
-    # db.spend(estimated)
+    await db.spend(estimated)
     print(f"✅ {name} approved to spend {estimated} tokens.")
     return True
 
